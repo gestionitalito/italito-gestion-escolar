@@ -43,8 +43,6 @@ import SaludAlumno from "./pages/gestion/alumnos/SaludAlumno";
 /* Gestión - Apoderados */
 import AutorizacionesApoderado from "./pages/gestion/apoderados/AutorizacionesApoderado";
 import BaseApoderados from "./pages/gestion/apoderados/BaseApoderados";
-import DatosContactoApoderado from "./pages/gestion/apoderados/DatosContactoApoderado";
-import NuevoApoderado from "./pages/gestion/apoderados/NuevoApoderado";
 import VinculacionAlumnos from "./pages/gestion/apoderados/VinculacionAlumnos";
 
 /* Gestión - Certificados */
@@ -449,24 +447,12 @@ function App() {
 
         <Route
           path="/gestion/apoderados/nuevo"
-          element={
-            <RutaPrivada user={user} cargandoSesion={cargandoSesion}>
-              <GestionPage>
-                <NuevoApoderado />
-              </GestionPage>
-            </RutaPrivada>
-          }
+          element={<Navigate to="/gestion/apoderados/base" replace />}
         />
 
         <Route
           path="/gestion/apoderados/contacto"
-          element={
-            <RutaPrivada user={user} cargandoSesion={cargandoSesion}>
-              <GestionPage>
-                <DatosContactoApoderado />
-              </GestionPage>
-            </RutaPrivada>
-          }
+          element={<Navigate to="/gestion/apoderados/base" replace />}
         />
 
         <Route

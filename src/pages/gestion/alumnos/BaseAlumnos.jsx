@@ -631,6 +631,137 @@ function BaseAlumnos() {
           color: white;
         }
 
+
+        .base-mobile-list {
+          display: none;
+        }
+
+        .base-mobile-card {
+          background: white;
+          border: 1px solid rgba(226, 232, 240, 0.95);
+          border-radius: 20px;
+          padding: 16px;
+          box-shadow: 0 10px 26px rgba(15, 23, 42, 0.07);
+        }
+
+        .base-mobile-head {
+          display: flex;
+          align-items: flex-start;
+          gap: 12px;
+          margin-bottom: 14px;
+        }
+
+        .base-mobile-head-info {
+          flex: 1;
+          min-width: 0;
+        }
+
+        .base-mobile-head-info strong {
+          display: block;
+          color: #0f172a;
+          font-size: 15px;
+          font-weight: 950;
+          line-height: 1.25;
+          overflow-wrap: anywhere;
+        }
+
+        .base-mobile-head-info span {
+          display: block;
+          margin-top: 4px;
+          color: #64748b;
+          font-size: 12px;
+          font-weight: 800;
+        }
+
+        .base-mobile-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 10px;
+          margin: 12px 0 14px;
+        }
+
+        .base-mobile-field {
+          background: #f8fafc;
+          border: 1px solid rgba(226, 232, 240, 0.95);
+          border-radius: 14px;
+          padding: 10px 12px;
+        }
+
+        .base-mobile-field small {
+          display: block;
+          color: #64748b;
+          font-size: 11px;
+          font-weight: 900;
+          text-transform: uppercase;
+          letter-spacing: 0.04em;
+          margin-bottom: 4px;
+        }
+
+        .base-mobile-field span {
+          display: block;
+          color: #0f172a;
+          font-size: 13px;
+          font-weight: 800;
+          overflow-wrap: anywhere;
+        }
+
+        .base-mobile-contact {
+          display: grid;
+          gap: 7px;
+        }
+
+        .base-mobile-contact span {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          color: #0f172a;
+          font-size: 13px;
+          font-weight: 800;
+          overflow-wrap: anywhere;
+        }
+
+        .base-mobile-actions {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 8px;
+          margin-top: 14px;
+        }
+
+        .base-mobile-action {
+          min-height: 42px;
+          border: 1px solid rgba(203, 213, 225, 0.9);
+          background: #ffffff;
+          color: #475569;
+          border-radius: 14px;
+          cursor: pointer;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 7px;
+          transition: all 0.2s ease;
+          text-decoration: none;
+          font-size: 12px;
+          font-weight: 900;
+        }
+
+        .base-mobile-action:hover {
+          background: #eff6ff;
+          color: #1d4ed8;
+          border-color: rgba(37, 99, 235, 0.35);
+        }
+
+        .base-mobile-action.danger:hover {
+          background: #fef2f2;
+          color: #b91c1c;
+          border-color: rgba(239, 68, 68, 0.35);
+        }
+
+        .base-mobile-action.delete:hover {
+          background: #7f1d1d;
+          color: white;
+          border-color: #7f1d1d;
+        }
+
         @media (max-width: 1000px) {
           .base-summary {
             grid-template-columns: 1fr;
@@ -763,47 +894,18 @@ function BaseAlumnos() {
           }
 
           .base-table-wrap {
-            border-radius: 18px;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
+            display: none;
           }
 
-          .base-table {
-            min-width: 980px;
-          }
-
-          .base-table th {
-            padding: 12px 14px;
-            font-size: 11px;
-          }
-
-          .base-table td {
-            padding: 13px 14px;
-            font-size: 13px;
-          }
-
-          .base-student-cell {
-            min-width: 210px;
+          .base-mobile-list {
+            display: grid;
+            gap: 12px;
           }
 
           .base-avatar {
             width: 40px;
             height: 40px;
             border-radius: 14px;
-          }
-
-          .base-contact span {
-            font-size: 12px;
-          }
-
-          .base-actions {
-            min-width: 170px;
-          }
-
-          .base-actions button,
-          .base-actions a {
-            width: 38px;
-            height: 38px;
           }
 
           .base-note {
@@ -834,8 +936,8 @@ function BaseAlumnos() {
             grid-template-columns: 1fr;
           }
 
-          .base-table {
-            min-width: 920px;
+          .base-mobile-actions {
+            grid-template-columns: 1fr;
           }
         }
       `}</style>
@@ -1097,6 +1199,138 @@ function BaseAlumnos() {
               )}
             </tbody>
           </table>
+        </div>
+
+        <div className="base-mobile-list">
+          {cargando ? (
+            <div className="base-loading">
+              Cargando base de alumnos desde Firebase...
+            </div>
+          ) : error ? (
+            <div className="base-error">{error}</div>
+          ) : alumnosFiltrados.length > 0 ? (
+            alumnosFiltrados.map((alumno) => {
+              const nombreAlumno = obtenerNombreAlumno(alumno);
+              const estado = alumno.estado || "Activo";
+              const estadoClase = estado.toLowerCase();
+
+              return (
+                <article className="base-mobile-card" key={`mobile-${alumno.id}`}>
+                  <div className="base-mobile-head">
+                    <div className="base-avatar">
+                      {alumno.nivel === "Pre-Kínder" ? "PK" : "K"}
+                    </div>
+
+                    <div className="base-mobile-head-info">
+                      <strong>{nombreAlumno}</strong>
+                      <span>Año escolar {alumno.anioEscolar || 2026}</span>
+                    </div>
+
+                    <span className={`base-status ${estadoClase}`}>
+                      {estado}
+                    </span>
+                  </div>
+
+                  <div className="base-mobile-grid">
+                    <div className="base-mobile-field">
+                      <small>RUT</small>
+                      <span>{alumno.rut || "Sin RUT"}</span>
+                    </div>
+
+                    <div className="base-mobile-field">
+                      <small>Nivel</small>
+                      <span
+                        className={
+                          alumno.nivel === "Pre-Kínder"
+                            ? "nivel-badge prekinder"
+                            : "nivel-badge kinder"
+                        }
+                      >
+                        {alumno.nivel || "Sin nivel"}
+                      </span>
+                    </div>
+
+                    <div className="base-mobile-field">
+                      <small>Apoderado titular</small>
+                      <span>{obtenerApoderado(alumno)}</span>
+                    </div>
+
+                    <div className="base-mobile-field">
+                      <small>Contacto</small>
+                      <div className="base-mobile-contact">
+                        <span>
+                          <Phone size={14} />
+                          {obtenerTelefono(alumno)}
+                        </span>
+                        <span>
+                          <Mail size={14} />
+                          {obtenerCorreo(alumno)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="base-mobile-actions">
+                    <button
+                      type="button"
+                      className="base-mobile-action"
+                      onClick={() =>
+                        alert(
+                          `Ficha de ${nombreAlumno}\n\nPróximo paso: conectar vista detallada del alumno.`
+                        )
+                      }
+                    >
+                      <Eye size={16} />
+                      Ver ficha
+                    </button>
+
+                    <Link
+                      to={`/gestion/alumnos/nuevo?id=${alumno.id}`}
+                      className="base-mobile-action"
+                    >
+                      <Pencil size={16} />
+                      Editar
+                    </Link>
+
+                    <Link
+                      to={`/gestion/certificados/alumno-regular?rut=${
+                        alumno.rut || ""
+                      }`}
+                      className="base-mobile-action"
+                    >
+                      <FileText size={16} />
+                      Certificado
+                    </Link>
+
+                    {estado !== "Retirado" && (
+                      <button
+                        type="button"
+                        className="base-mobile-action danger"
+                        onClick={() => marcarComoRetirado(alumno)}
+                      >
+                        <UserX size={16} />
+                        Retirar
+                      </button>
+                    )}
+
+                    <button
+                      type="button"
+                      className="base-mobile-action delete"
+                      onClick={() => eliminarAlumno(alumno)}
+                    >
+                      <Trash2 size={16} />
+                      Eliminar
+                    </button>
+                  </div>
+                </article>
+              );
+            })
+          ) : (
+            <div className="base-empty">
+              No se encontraron alumnos registrados. Puedes agregar un alumno
+              nuevo desde el botón superior.
+            </div>
+          )}
         </div>
       </section>
 
